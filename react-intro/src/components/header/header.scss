@@ -1,0 +1,53 @@
+@import "../base";
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    background-color: $main-yellow;
+    color: $main-black;
+    height: 50px;
+
+    h1 {
+        font-size: 2em;
+        font-weight: bolder;
+    }
+}
+
+
+#header-menu-icon {
+    cursor: pointer;
+    font-size: 2em;
+    color: $main-black;
+    margin-left: 20px;
+
+    &:hover {
+        color: #fff;
+        transition: all 0.1s ease-in-out;
+    }
+    &:active {
+        color: $main-orange;
+        transform: scale(1.1) 0.3s ease-in-out;
+        transition: all 0.1s ease-in-out;
+    }
+}
+
+
+#header-menu-right {
+    padding-right: 20px;
+}
+
+
+#header-menu-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    svg {
+        width: 25px;
+        height: 25px;
+    }
+
+}

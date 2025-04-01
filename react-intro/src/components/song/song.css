@@ -1,0 +1,73 @@
+.song-main-container {
+  padding: 15px;
+  background-color: #bcb6ae;
+  border-radius: 25px;
+  max-width: 500px;
+}
+
+.song-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background-color: #171820;
+  color: #fdc029;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.song-container img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  margin: 3px;
+}
+.song-container img:hover {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.song-info-container h2, .song-info-container h3, .song-info-container p {
+  margin: 8px 0;
+}
+.song-info-container h2, .song-info-container h3 {
+  font-size: 1.1em;
+}
+.song-info-container h3 {
+  color: #fff;
+}
+.song-info-container p {
+  font-size: 0.9em;
+  color: #bcb6ae;
+}
+
+.song-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.song-info-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.song-info-right svg {
+  cursor: pointer;
+  color: #fff;
+  background-color: #df861d;
+  padding: 4px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+.song-info-right svg:hover {
+  background-color: #fff;
+  color: #df861d;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.song-info-right svg:active {
+  background-color: #df861d;
+  color: #fff;
+  transform: scale(1.1);
+  transition: transform 0.1s ease-in-out;
+}/*# sourceMappingURL=song.css.map */

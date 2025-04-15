@@ -28,7 +28,7 @@ header {
     }
     &:active {
         color: $main-orange;
-        transform: scale(1.1) 0.3s ease-in-out;
+        transform: scale(1.2);
         transition: all 0.1s ease-in-out;
     }
 }
@@ -50,4 +50,102 @@ header {
         height: 25px;
     }
 
+}
+
+
+//Side menu styling
+#side-menu {
+    background-color: $main-black;
+    opacity: 0.99;
+    color: #fff;
+    padding: 10px 20px;
+    position: fixed;
+    z-index: 1000;
+    height: 90vh;
+    width: 250px;
+    overflow-y: scroll;
+    scrollbar-color: $main-yellow $main-black;
+    scrollbar-width: thin;
+    font-size: .8em;
+    left: -300px;
+    transition: left 0.3s ease-in-out;
+
+    h1 {
+        color: $main-yellow;
+        font-size: 2em;
+    }
+
+
+    h2 {
+        color: $main-yellow;
+        font-size: 1.5em;
+        font-weight: bolder;
+        margin: 10px 0;
+    }
+
+
+    img {
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        border-radius: 50%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+    }
+}
+
+
+#side-menu.visible {
+    left: 0;
+}
+
+
+#side-menu.hidden {
+    left: -300px;
+}
+
+
+#side-menu-container {
+    border-bottom: 1px solid $main-yellow;
+    margin-bottom: 15px;
+}
+
+
+.side-menu-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 10px;
+
+    svg {
+        color: $main-yellow;
+        font-size: 1.2em;
+        transition: all 0.3s ease-in-out;
+        padding: 0 5px;
+
+        &:hover {
+            color: $main-orange;
+            cursor: pointer;
+            transform: scale(1.2);
+            transition: all 0.1s ease-in-out;
+        }
+
+        &:active {
+            color: #fff;
+        }
+    }
+}
+
+
+.side-menu-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+
+    p {
+        margin: 0;
+    }
 }

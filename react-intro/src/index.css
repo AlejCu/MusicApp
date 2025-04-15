@@ -11,6 +11,6 @@ main {
 
 .song-area {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-around;
 }/*# sourceMappingURL=index.css.map */

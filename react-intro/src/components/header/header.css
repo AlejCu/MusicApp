@@ -87,7 +87,7 @@ header h1 {
   left: -300px;
 }
 
-#side-menu-container {
+.side-menu-container {
   border-bottom: 1px solid #fdc029;
   margin-bottom: 15px;
 }

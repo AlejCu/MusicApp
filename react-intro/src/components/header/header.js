@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './header.css';
-import { FavoriteSongsContext } from '../favoriteSongContext/FavoriteSongContext';
+import { FavoriteSongContext } from '../favoriteSongContext/FavoriteSongContext';
 
 //Import for FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
   const [isMenuVisible, setMenuVisible] = useState(false);
-  const { favoriteSongs, removeFromFavorites } = useContext(FavoriteSongsContext);
+  const { favoriteSongs, removeFromFavorites } = useContext(FavoriteSongContext);
 
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
@@ -48,7 +48,7 @@ function Header() {
           <h1>Favorites</h1>
 
           {favoriteSongs.map((song, index) => (
-          <div id="side-menu-container" key={index}>
+          <div className="side-menu-container" key={index}>
 
             <img src={song.img} alt={`Cover of ${song.title}`} />
 

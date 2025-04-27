@@ -1,8 +1,8 @@
 import React, { createContext, useState } from 'react';
 
-export const FavoriteSongsContext = createContext();
+export const FavoriteSongContext = createContext();
 
-export const FavoriteSongsProvider = ({ children }) => {
+export const FavoriteSongsContext = ({ children }) => {
   const [favoriteSongs, setFavoriteSongs] = useState([]);
 
   // Function to add to favorites
@@ -10,7 +10,7 @@ export const FavoriteSongsProvider = ({ children }) => {
 
     setFavoriteSongs((prevFavorites) => {
 
-      if (!prevFavorites.some((favSong) => favSong.title === song.title)) {
+      if (!prevFavorites.some((favSong) => favSong.title === song.title && favSong.id === song.id)) {
         console.log(`Added ${song.title} by ${song.artist} to favorites!`);
         return [...prevFavorites, song];
       } 
@@ -30,7 +30,7 @@ export const FavoriteSongsProvider = ({ children }) => {
     setFavoriteSongs((prevFavorites) => {
 
       const updatedFavorites = prevFavorites.filter(
-        (favSong) => favSong.title !== song.title
+        (favSong) => favSong.id !== song.id
       );
 
       console.log(`Removed ${song.title} by ${song.artist} from favorites!`);
@@ -41,8 +41,8 @@ export const FavoriteSongsProvider = ({ children }) => {
   };
 
   return (
-    <FavoriteSongsContext.Provider value={{ favoriteSongs, addToFavorites, removeFromFavorites }}>
+    <FavoriteSongContext.Provider value={{ favoriteSongs, addToFavorites, removeFromFavorites }}>
       {children}
-    </FavoriteSongsContext.Provider>
+    </FavoriteSongContext.Provider>
   );
 };

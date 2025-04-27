@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './song.css'
-import { FavoriteSongsContext } from '../favoriteSongContext/FavoriteSongContext';
+import { FavoriteSongContext } from '../favoriteSongContext/FavoriteSongContext';
 
 //Image imports
 import dieHardImage from '../../img/die-hard-kendrick-lamar.jpg';
@@ -27,6 +27,7 @@ const songList = [
     genre: "Hip-Hop",
     img: dieHardImage,
     link: "https://www.youtube.com/watch?v=Lx3MGrafykU&ab_channel=KendrickLamar",
+    id: 1,
   },
 
   {
@@ -36,7 +37,8 @@ const songList = [
     year: 2020,
     genre: "R&B",
     img: yourManImage,
-    link: "https://www.youtube.com/watch?v=RrtkU7i0qD8&ab_channel=88rising"
+    link: "https://www.youtube.com/watch?v=RrtkU7i0qD8&ab_channel=88rising",
+    id: 2,
   },
 
   {
@@ -46,7 +48,8 @@ const songList = [
     year: 2021,
     genre: "Pop",
     img: callMeBackImage,
-    link: "https://www.youtube.com/watch?v=SNZfK06U68g&ab_channel=CHASEATLANTIC"
+    link: "https://www.youtube.com/watch?v=SNZfK06U68g&ab_channel=CHASEATLANTIC",
+    id: 3,
   },
 
   {
@@ -56,7 +59,8 @@ const songList = [
     year: 2018,
     genre: "R&B",
     img: slowDancingImage,
-    link: "https://www.youtube.com/watch?v=K3Qzzggn--s&ab_channel=88rising"
+    link: "https://www.youtube.com/watch?v=K3Qzzggn--s&ab_channel=88rising",
+    id: 4,
   },
 
   {
@@ -67,6 +71,7 @@ const songList = [
     genre: "Hip-Hop",
     img: notLikeUsImage,
     link: "https://www.youtube.com/watch?v=H58vbez_m4E&ab_channel=KendrickLamarVEVO",
+    id: 5,
   },
 
   {
@@ -76,17 +81,19 @@ const songList = [
     year: 2017,
     genre: "Pop",
     img: consumeImage,
-    link: "https://www.youtube.com/watch?v=oCdXuomafSU&ab_channel=CHASEATLANTIC"
+    link: "https://www.youtube.com/watch?v=oCdXuomafSU&ab_channel=CHASEATLANTIC",
+    id: 6,
   },
 
   {
-    title: "Cirlces",
+    title: "Circles",
     artist: "Post Malone",
     album: "Hollywood's Bleeding",
     year: 2019,
     genre: "Pop",
     img: circlesImage,
-    link: "https://www.youtube.com/watch?v=wXhTHyIgQ_U&ab_channel=PostMaloneVEVO"
+    link: "https://www.youtube.com/watch?v=wXhTHyIgQ_U&ab_channel=PostMaloneVEVO",
+    id: 7,
   },
 
   {
@@ -96,7 +103,8 @@ const songList = [
     year: 2018,
     genre: "Pop",
     img: rockstarImage,
-    link: "https://www.youtube.com/watch?v=UceaB4D0jpo&ab_channel=PostMaloneVEVO"
+    link: "https://www.youtube.com/watch?v=UceaB4D0jpo&ab_channel=PostMaloneVEVO",
+    id: 8,
   }
 ];
 
@@ -104,7 +112,7 @@ const songList = [
   //This creates a song card for each song in the songList array
   function Song() {
 
-    const { addToFavorites } = useContext(FavoriteSongsContext);
+    const { addToFavorites } = useContext(FavoriteSongContext);
     const [searchTerm, setSearchTerm] = useState('');
   
     // Song filter using search term

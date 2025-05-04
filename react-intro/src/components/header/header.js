@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import './header.css';
-import { FavoriteSongContext } from '../favoriteSongContext/FavoriteSongContext';
+import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
 
 //Import for FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

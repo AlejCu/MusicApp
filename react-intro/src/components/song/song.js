@@ -1,187 +1,104 @@
 import React, { useContext, useState } from 'react';
-import './song.css'
-import { FavoriteSongContext } from '../favoriteSongContext/FavoriteSongContext';
+import './song.css';
+import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
+import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
 
-//Image imports
-import dieHardImage from '../../img/die-hard-kendrick-lamar.jpg';
-import yourManImage from '../../img/your-man-joji.jpg'
-import callMeBackImage from '../../img/call-me-back-chase-atlantic.jpg'
-import slowDancingImage from '../../img/slow-dancing-in-the-dark-joji.jpg'
-import notLikeUsImage from '../../img/not-like-us-kendrick-lamar.jpg'
-import consumeImage from '../../img/consume-chase-atlantic.jpg'
-import circlesImage from '../../img/circles-post-malone.jpg'
-import rockstarImage from '../../img/rockstar-post-malone.jpg'
-
-//FontAwesome icons imports
+// FontAwesome icons imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+function Song() {
+  const { addToFavorites } = useContext(FavoriteSongContext);
+  const [artistName, setArtistName] = useState(''); 
+  const { albums, loading, error } = useFetchAlbum(artistName); 
 
-//This contains the song information used to fill in the cards
-const songList = [
-  {
-    title: "Die Hard",
-    artist: "Kendrick Lamar",
-    album: "Mr. Morale & The Big Steppers",
-    year: 2022,
-    genre: "Hip-Hop",
-    img: dieHardImage,
-    link: "https://www.youtube.com/watch?v=Lx3MGrafykU&ab_channel=KendrickLamar",
-    id: 1,
-  },
+  console.log('Artist Name:', artistName);
+  console.log('Albums:', albums);
 
-  {
-    title: "Your Man",
-    artist: "Joji",
-    album: "Nectar",
-    year: 2020,
-    genre: "R&B",
-    img: yourManImage,
-    link: "https://www.youtube.com/watch?v=RrtkU7i0qD8&ab_channel=88rising",
-    id: 2,
-  },
+  return (
+    <>
+      <div className="search-area">
 
-  {
-    title: "Call me back",
-    artist: "Chase Atlantic",
-    album: "beauty in death",
-    year: 2021,
-    genre: "Pop",
-    img: callMeBackImage,
-    link: "https://www.youtube.com/watch?v=SNZfK06U68g&ab_channel=CHASEATLANTIC",
-    id: 3,
-  },
+        <input
+          type="text"
+          id="search"
+          placeholder="Search for an artist..."
+          value={artistName} 
+          onChange={(e) => setArtistName(e.target.value)} 
+        />
 
-  {
-    title: "Slow Dancing in the Dark",
-    artist: "Joji",
-    album: "BALLADS 1",
-    year: 2018,
-    genre: "R&B",
-    img: slowDancingImage,
-    link: "https://www.youtube.com/watch?v=K3Qzzggn--s&ab_channel=88rising",
-    id: 4,
-  },
+        <button id="search-button" onClick={() => setArtistName('')}>
+          Clear
+        </button>
 
-  {
-    title: "Not Like Us",
-    artist: "Kendrick Lamar",
-    album: "Mr. Morale & The Big Steppers",
-    year: 2022,
-    genre: "Hip-Hop",
-    img: notLikeUsImage,
-    link: "https://www.youtube.com/watch?v=H58vbez_m4E&ab_channel=KendrickLamarVEVO",
-    id: 5,
-  },
+      </div>
 
-  {
-    title: "Consume",
-    artist: "Chase Atlantic",
-    album: "Dying to Live",
-    year: 2017,
-    genre: "Pop",
-    img: consumeImage,
-    link: "https://www.youtube.com/watch?v=oCdXuomafSU&ab_channel=CHASEATLANTIC",
-    id: 6,
-  },
+      {loading && <p>Loading albums...</p>}
 
-  {
-    title: "Circles",
-    artist: "Post Malone",
-    album: "Hollywood's Bleeding",
-    year: 2019,
-    genre: "Pop",
-    img: circlesImage,
-    link: "https://www.youtube.com/watch?v=wXhTHyIgQ_U&ab_channel=PostMaloneVEVO",
-    id: 7,
-  },
-
-  {
-    title: "Rockstar",
-    artist: "Post Malone",
-    album: "Beerbongs & Bentleys",
-    year: 2018,
-    genre: "Pop",
-    img: rockstarImage,
-    link: "https://www.youtube.com/watch?v=UceaB4D0jpo&ab_channel=PostMaloneVEVO",
-    id: 8,
-  }
-];
+      {error && <p className="error-message">{error}</p>}
 
 
-  //This creates a song card for each song in the songList array
-  function Song() {
+      <div className="song-list-area">
 
-    const { addToFavorites } = useContext(FavoriteSongContext);
-    const [searchTerm, setSearchTerm] = useState('');
-  
-    // Song filter using search term
-    const filteredSongs = songList.filter((song) =>
-      song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  
-    return (
-      <>
+        {albums.map((album, index) => (
 
-        <div className="search-area">
+          <div className="song-main-container" key={index}>
 
-          <input type="text" id="search" placeholder="Search for a song..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+            <div className="song-container">
 
-          <button id="search-button" onClick={() => setSearchTerm('')}>Clear</button>
+              <a href={album.strAlbumThumb} target="_blank" rel="noopener noreferrer">
 
-        </div>
+                {album.strAlbumThumb && (
 
-        <div className="song-list-area">
-  
-          {filteredSongs.map((song, index) => (
+                  <img
+                    src={album.strAlbumThumb}
+                    alt={`Portada de ${album.strAlbum}`}
+                  />
 
-            <div className="song-main-container" key={index}>
+                )}
 
-              <div className="song-container">
+              </a>
 
-                <a href={song.link} target="_blank" rel="noopener noreferrer">
+              <div className="song-info-container">
 
-                  {song.img && <img src={song.img} alt={`Portada de ${song.title}`} />}
+                <div className="song-info-left">
 
-                </a>
+                  <h2>{album.strAlbum}</h2>
 
+                  <h3>{album.strArtist}</h3>
 
-                <div className="song-info-container">
+                  <p>{album.strLabel}</p>
 
-                  <div className="song-info-left">
+                  <p>{album.intYearReleased}</p>
 
-                    <h2>{song.title}</h2>
+                  <p>{album.strGenre}</p>
 
-                    <h3>{song.artist}</h3>
-
-                    <p>{song.album}</p>
-
-                    <p>{song.year}</p>
-
-                    <p>{song.genre}</p>
-
-                  </div>
-
-
-                  <div className="song-info-right">
-
-                    <FontAwesomeIcon icon={faPlus} id="song-add-button" onClick={() => addToFavorites(song)}/>
-                  
-                  </div>
-                
                 </div>
-              
+
+                <div className="song-info-right">
+
+
+                  {/*Add to favorites button*/}
+                  <FontAwesomeIcon
+                    icon={faPlus}
+                    id="song-add-button"
+                    onClick={() => addToFavorites(album)}
+                  />
+
+                </div>
+
               </div>
-            
+
             </div>
-          ))}
 
-        </div>
+          </div>
 
-      </>
-    );
-  }
+        ))}
 
+      </div>
+
+    </>
+  );
+}
 
 export { Song };

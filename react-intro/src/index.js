@@ -4,7 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Header} from './components/header/header';
 import {Song} from './components/song/song';
-import { FavoriteSongsContext } from './components/favoriteSongContext/FavoriteSongContext';
+import {SongDetails} from './components/songDetails/songDetails';
+
+import { FavoriteSongsContext } from './Hooks/favoriteSongContext/FavoriteSongContext';
+import { BrowserRouter, Route, Routes } from "react-router";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,17 +15,27 @@ root.render(
 
     <FavoriteSongsContext>
 
+    <BrowserRouter>
+
       <Header/>
 
       <main>
 
-        <div className="song-area">
+      <div className="song-area">
 
-          <Song/>
+            <Routes>
+
+              <Route path="/songSearch" element={<Song/>} />
+              <Route path="/songDetails" element={<SongDetails/>} />
+              <Route path="/" element={<Song/>} />
+
+            </Routes>
 
         </div>
 
       </main>
+
+      </BrowserRouter>
 
     </FavoriteSongsContext>
 

@@ -1,187 +1,140 @@
 import React, { useContext, useState } from 'react';
-import './song.css'
-import { FavoriteSongContext } from '../favoriteSongContext/FavoriteSongContext';
+import './song.css';
+import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
+import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
+import { useNavigate } from 'react-router-dom';
 
-//Image imports
-import dieHardImage from '../../img/die-hard-kendrick-lamar.jpg';
-import yourManImage from '../../img/your-man-joji.jpg'
-import callMeBackImage from '../../img/call-me-back-chase-atlantic.jpg'
-import slowDancingImage from '../../img/slow-dancing-in-the-dark-joji.jpg'
-import notLikeUsImage from '../../img/not-like-us-kendrick-lamar.jpg'
-import consumeImage from '../../img/consume-chase-atlantic.jpg'
-import circlesImage from '../../img/circles-post-malone.jpg'
-import rockstarImage from '../../img/rockstar-post-malone.jpg'
-
-//FontAwesome icons imports
+// FontAwesome icons imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+function Song() {
+  const { addToFavorites } = useContext(FavoriteSongContext);
+  const [artistName, setArtistName] = useState(''); 
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const { albums, loading, error } = useFetchAlbum(searchQuery);
+  const navigate = useNavigate();
 
-//This contains the song information used to fill in the cards
-const songList = [
-  {
-    title: "Die Hard",
-    artist: "Kendrick Lamar",
-    album: "Mr. Morale & The Big Steppers",
-    year: 2022,
-    genre: "Hip-Hop",
-    img: dieHardImage,
-    link: "https://www.youtube.com/watch?v=Lx3MGrafykU&ab_channel=KendrickLamar",
-    id: 1,
-  },
-
-  {
-    title: "Your Man",
-    artist: "Joji",
-    album: "Nectar",
-    year: 2020,
-    genre: "R&B",
-    img: yourManImage,
-    link: "https://www.youtube.com/watch?v=RrtkU7i0qD8&ab_channel=88rising",
-    id: 2,
-  },
-
-  {
-    title: "Call me back",
-    artist: "Chase Atlantic",
-    album: "beauty in death",
-    year: 2021,
-    genre: "Pop",
-    img: callMeBackImage,
-    link: "https://www.youtube.com/watch?v=SNZfK06U68g&ab_channel=CHASEATLANTIC",
-    id: 3,
-  },
-
-  {
-    title: "Slow Dancing in the Dark",
-    artist: "Joji",
-    album: "BALLADS 1",
-    year: 2018,
-    genre: "R&B",
-    img: slowDancingImage,
-    link: "https://www.youtube.com/watch?v=K3Qzzggn--s&ab_channel=88rising",
-    id: 4,
-  },
-
-  {
-    title: "Not Like Us",
-    artist: "Kendrick Lamar",
-    album: "Mr. Morale & The Big Steppers",
-    year: 2022,
-    genre: "Hip-Hop",
-    img: notLikeUsImage,
-    link: "https://www.youtube.com/watch?v=H58vbez_m4E&ab_channel=KendrickLamarVEVO",
-    id: 5,
-  },
-
-  {
-    title: "Consume",
-    artist: "Chase Atlantic",
-    album: "Dying to Live",
-    year: 2017,
-    genre: "Pop",
-    img: consumeImage,
-    link: "https://www.youtube.com/watch?v=oCdXuomafSU&ab_channel=CHASEATLANTIC",
-    id: 6,
-  },
-
-  {
-    title: "Circles",
-    artist: "Post Malone",
-    album: "Hollywood's Bleeding",
-    year: 2019,
-    genre: "Pop",
-    img: circlesImage,
-    link: "https://www.youtube.com/watch?v=wXhTHyIgQ_U&ab_channel=PostMaloneVEVO",
-    id: 7,
-  },
-
-  {
-    title: "Rockstar",
-    artist: "Post Malone",
-    album: "Beerbongs & Bentleys",
-    year: 2018,
-    genre: "Pop",
-    img: rockstarImage,
-    link: "https://www.youtube.com/watch?v=UceaB4D0jpo&ab_channel=PostMaloneVEVO",
-    id: 8,
-  }
-];
-
-
-  //This creates a song card for each song in the songList array
-  function Song() {
-
-    const { addToFavorites } = useContext(FavoriteSongContext);
-    const [searchTerm, setSearchTerm] = useState('');
   
-    // Song filter using search term
-    const filteredSongs = songList.filter((song) =>
-      song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  
-    return (
-      <>
+  //This const is used for the search button
+  const handleSearch = () => {
+    setSearchQuery(artistName); 
+  };
 
-        <div className="search-area">
+  //This const is used for the enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setSearchQuery(artistName);
+    }
+  };
 
-          <input type="text" id="search" placeholder="Search for a song..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
+  return (
+    <>
+      {/* Search Area*/}
+      <div className="search-area">
 
-          <button id="search-button" onClick={() => setSearchTerm('')}>Clear</button>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search for an artist..."
+          value={artistName}
+          onChange={(e) => setArtistName(e.target.value)} 
+          onKeyPress={handleKeyPress} 
+        />
+        
+        <button id="search-button" onClick={handleSearch}>
+          Search
+        </button>
 
-        </div>
+      </div>
 
-        <div className="song-list-area">
-  
-          {filteredSongs.map((song, index) => (
+      {/* Loading message*/}
+      {loading && <p>Loading albums...</p>}
 
-            <div className="song-main-container" key={index}>
+      {/* Error message */}
+      {error && <p className="error-message">{error}</p>}
 
-              <div className="song-container">
+      {/* Album section generator */}
 
-                <a href={song.link} target="_blank" rel="noopener noreferrer">
+      <div className="song-list-area">
 
-                  {song.img && <img src={song.img} alt={`Portada de ${song.title}`} />}
+        {albums.map((album, index) => (
 
-                </a>
+          <div className="song-main-container" key={index}>
 
+            <div className="song-container">
 
-                <div className="song-info-container">
+              {/* This is the link to the song details page */}
+            <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  navigate('/songDetails', { state: { album: { ...album, artist: artistName} } });
+                }}
+              >
+                {album.coverArt ? (
+                  <img
+                    src={album.coverArt}
+                    alt={`Cover of ${album.title}`}
+                    className="album-cover"
+                  />
+                ) : (
+                  <div className="no-cover">No Cover Available</div>
+                )}
+              </a>
 
-                  <div className="song-info-left">
+              <div className="song-info-container">
 
-                    <h2>{song.title}</h2>
+                <div className="song-info-left">
 
-                    <h3>{song.artist}</h3>
+                  <h2>{album.title}</h2>
 
-                    <p>{song.album}</p>
+                  <h3>{artistName}</h3>
 
-                    <p>{song.year}</p>
+                  <p><strong>Release Date:</strong> {album['first-release-date']}</p>
 
-                    <p>{song.genre}</p>
+                  <p><strong>Primary Type:</strong> {album['primary-type']}</p>
 
-                  </div>
-
-
-                  <div className="song-info-right">
-
-                    <FontAwesomeIcon icon={faPlus} id="song-add-button" onClick={() => addToFavorites(song)}/>
-                  
-                  </div>
-                
                 </div>
-              
+
+                <div className="song-info-right">
+
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  id="song-add-button"
+                  onClick={() => {
+                    const songData = {
+                      id: album.id,
+                      title: album.title,
+                      artist: artistName,
+                      img: album.coverArt || 'https://via.placeholder.com/150',
+                      year: album['first-release-date'] || 'Unknown Year',
+                      genre: album['primary-type'] || 'Unknown Genre',
+                      link: album.coverArt || '#',
+                    };
+
+                    // Log the song data to the console
+                    console.log('Adding to favorites:', songData);
+
+                    // Add the song to favorites
+                    addToFavorites(songData);
+                  }}
+                  />
+
+                </div>
+
               </div>
-            
+
             </div>
-          ))}
 
-        </div>
+          </div>
 
-      </>
-    );
-  }
+        ))}
+        
+      </div>
 
+    </>
+  );
+}
 
 export { Song };

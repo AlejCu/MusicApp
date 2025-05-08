@@ -6,6 +6,9 @@ header {
   background-color: #fdc029;
   color: #171820;
   height: 50px;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
 }
 header h1 {
   font-size: 2em;
@@ -32,11 +35,21 @@ header h1 {
   padding-right: 20px;
 }
 
-#header-menu-center {
+#header-menu-center a {
+  text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  color: #171820;
+}
+#header-menu-center a:hover {
+  opacity: 0.85;
+  transition: all 0.1s ease-in-out;
+}
+#header-menu-center a:active {
+  color: #fff;
+  transition: all 0.1s ease-in-out;
 }
 #header-menu-center svg {
   width: 25px;
@@ -58,6 +71,7 @@ header h1 {
   font-size: 0.8em;
   left: -300px;
   transition: left 0.3s ease-in-out;
+  margin-top: 90px;
 }
 #side-menu h1 {
   color: #fdc029;
@@ -68,6 +82,9 @@ header h1 {
   font-size: 1.5em;
   font-weight: bolder;
   margin: 10px 0;
+}
+#side-menu h2:first-letter {
+  text-transform: uppercase;
 }
 #side-menu img {
   width: 100%;

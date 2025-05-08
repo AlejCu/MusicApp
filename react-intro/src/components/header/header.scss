@@ -8,6 +8,9 @@ header {
     background-color: $main-yellow;
     color: $main-black;
     height: 50px;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
 
     h1 {
         font-size: 2em;
@@ -40,10 +43,26 @@ header {
 
 
 #header-menu-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+
+    a {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        color: $main-black;
+
+
+        &:hover {
+            opacity: 0.85;
+            transition: all 0.1s ease-in-out;
+        }
+
+        &:active {
+            color: #fff;
+            transition: all 0.1s ease-in-out;
+        }
+    }
 
     svg {
         width: 25px;
@@ -69,6 +88,7 @@ header {
     font-size: .8em;
     left: -300px;
     transition: left 0.3s ease-in-out;
+    margin-top: 90px;
 
     h1 {
         color: $main-yellow;
@@ -81,6 +101,10 @@ header {
         font-size: 1.5em;
         font-weight: bolder;
         margin: 10px 0;
+
+        &:first-letter {
+            text-transform: uppercase;
+        }
     }
 
 

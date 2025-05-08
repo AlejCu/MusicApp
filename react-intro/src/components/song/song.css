@@ -5,6 +5,8 @@
   max-width: 400px;
   display: flex;
   margin: 20px;
+  max-height: 450px;
+  max-width: 320px;
 }
 
 .song-list-area {
@@ -23,10 +25,15 @@
   background-color: #171820;
   color: #fdc029;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  min-height: 400px;
+  min-width: 275px;
 }
 .song-container img {
   width: 100%;
   max-width: 250px;
+  max-height: 250px;
+  min-width: 250px;
+  min-height: 250px;
   border-radius: 5px;
   margin: 3px;
 }
@@ -44,6 +51,9 @@
 }
 .song-info-container h3 {
   color: #fff;
+}
+.song-info-container h3::first-letter {
+  text-transform: uppercase;
 }
 .song-info-container p {
   font-size: 0.9em;

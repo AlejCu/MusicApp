@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './song.css';
 import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
 import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
+import { useNavigate } from 'react-router-dom';
 
 // FontAwesome icons imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,33 +11,50 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 function Song() {
   const { addToFavorites } = useContext(FavoriteSongContext);
   const [artistName, setArtistName] = useState(''); 
-  const { albums, loading, error } = useFetchAlbum(artistName); 
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const { albums, loading, error } = useFetchAlbum(searchQuery);
+  const navigate = useNavigate();
 
-  console.log('Artist Name:', artistName);
-  console.log('Albums:', albums);
+  
+  //This const is used for the search button
+  const handleSearch = () => {
+    setSearchQuery(artistName); 
+  };
+
+  //This const is used for the enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      setSearchQuery(artistName);
+    }
+  };
 
   return (
     <>
+      {/* Search Area*/}
       <div className="search-area">
 
         <input
           type="text"
           id="search"
           placeholder="Search for an artist..."
-          value={artistName} 
+          value={artistName}
           onChange={(e) => setArtistName(e.target.value)} 
+          onKeyPress={handleKeyPress} 
         />
-
-        <button id="search-button" onClick={() => setArtistName('')}>
-          Clear
+        
+        <button id="search-button" onClick={handleSearch}>
+          Search
         </button>
 
       </div>
 
+      {/* Loading message*/}
       {loading && <p>Loading albums...</p>}
 
+      {/* Error message */}
       {error && <p className="error-message">{error}</p>}
 
+      {/* Album section generator */}
 
       <div className="song-list-area">
 
@@ -46,43 +64,61 @@ function Song() {
 
             <div className="song-container">
 
-              <a href={album.strAlbumThumb} target="_blank" rel="noopener noreferrer">
-
-                {album.strAlbumThumb && (
-
+              {/* This is the link to the song details page */}
+            <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  navigate('/songDetails', { state: { album: { ...album, artist: artistName} } });
+                }}
+              >
+                {album.coverArt ? (
                   <img
-                    src={album.strAlbumThumb}
-                    alt={`Portada de ${album.strAlbum}`}
+                    src={album.coverArt}
+                    alt={`Cover of ${album.title}`}
+                    className="album-cover"
                   />
-
+                ) : (
+                  <div className="no-cover">No Cover Available</div>
                 )}
-
               </a>
 
               <div className="song-info-container">
 
                 <div className="song-info-left">
 
-                  <h2>{album.strAlbum}</h2>
+                  <h2>{album.title}</h2>
 
-                  <h3>{album.strArtist}</h3>
+                  <h3>{artistName}</h3>
 
-                  <p>{album.strLabel}</p>
+                  <p><strong>Release Date:</strong> {album['first-release-date']}</p>
 
-                  <p>{album.intYearReleased}</p>
-
-                  <p>{album.strGenre}</p>
+                  <p><strong>Primary Type:</strong> {album['primary-type']}</p>
 
                 </div>
 
                 <div className="song-info-right">
 
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  id="song-add-button"
+                  onClick={() => {
+                    const songData = {
+                      id: album.id,
+                      title: album.title,
+                      artist: artistName,
+                      img: album.coverArt || 'https://via.placeholder.com/150',
+                      year: album['first-release-date'] || 'Unknown Year',
+                      genre: album['primary-type'] || 'Unknown Genre',
+                      link: album.coverArt || '#',
+                    };
 
-                  {/*Add to favorites button*/}
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    id="song-add-button"
-                    onClick={() => addToFavorites(album)}
+                    // Log the song data to the console
+                    console.log('Adding to favorites:', songData);
+
+                    // Add the song to favorites
+                    addToFavorites(songData);
+                  }}
                   />
 
                 </div>
@@ -94,7 +130,7 @@ function Song() {
           </div>
 
         ))}
-
+        
       </div>
 
     </>

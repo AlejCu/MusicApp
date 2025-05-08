@@ -15,13 +15,13 @@ root.render(
 
     <FavoriteSongsContext>
 
+    <BrowserRouter>
+
       <Header/>
 
       <main>
 
       <div className="song-area">
-
-          <BrowserRouter>
 
             <Routes>
 
@@ -31,11 +31,11 @@ root.render(
 
             </Routes>
 
-          </BrowserRouter>
-
         </div>
 
       </main>
+
+      </BrowserRouter>
 
     </FavoriteSongsContext>
 

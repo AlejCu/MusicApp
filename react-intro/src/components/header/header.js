@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import './header.css';
+import { HeaderStyles, SideMenu,  } from './headerStyles';
 import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ function Header() {
 
   return (
     <>
-      <header>
+      <HeaderStyles>
 
         <div id="header-menu-left">
 
@@ -39,9 +39,9 @@ function Header() {
 
         <div id="header-menu-right"></div>
 
-      </header>
+      </HeaderStyles>
 
-      <div id="side-menu" className={isMenuVisible ? 'visible' : 'hidden'}>
+      <SideMenu className={isMenuVisible ? 'visible' : 'hidden'}>
 
         <h1>Favorites</h1>
 
@@ -55,9 +55,9 @@ function Header() {
               className="album-cover"
             />
 
-            <h1>{song.title || 'Unknown Title'}</h1>
+            <h2>{song.title || 'Unknown Title'}</h2>
 
-            <h2>{song.artist || 'Unknown Artist'}</h2>
+            <h3>{song.artist || 'Unknown Artist'}</h3>
 
             <div className="side-menu-info">
 
@@ -83,7 +83,7 @@ function Header() {
 
         ))}
 
-      </div>
+      </SideMenu>
     </>
   );
 }

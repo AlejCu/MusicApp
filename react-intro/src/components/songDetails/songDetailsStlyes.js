@@ -1,6 +1,6 @@
-@import "../base";
+import styled from 'styled-components';
 
-.song-details-container {
+export const SongDetailsContainer = styled.div`
     text-align: center;
     padding: 20px;
 
@@ -18,7 +18,7 @@
 
     h2 {
       font-size: 1.5em;
-      color: $main-orange;
+      color: #df861d;
       margin-bottom: 20px;
 
       &::first-letter {
@@ -30,10 +30,10 @@
       font-size: 1.2em;
       margin: 5px 0;
     }
-  }
+`;
 
-  .image-container {
-    background-color: $main-black;
+export const ImageContainer = styled.div`
+    background-color: #171820;
     padding: 20px;
     border-radius: 15px;
-  }
+`;

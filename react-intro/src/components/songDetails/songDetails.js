@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import './songDetails.css';
+import { SongDetailsContainer, ImageContainer } from './songDetailsStlyes';
 
 function SongDetails() {
   const location = useLocation();
@@ -12,9 +12,9 @@ function SongDetails() {
 
   return (
 
-    <div className="song-details-container">
+    <SongDetailsContainer>
 
-      <div className="image-container">
+      <ImageContainer>
 
         <img
           src={album.coverArt || 'https://via.placeholder.com/150'}
@@ -22,7 +22,7 @@ function SongDetails() {
           className="album-cover"
         />
 
-      </div>
+      </ImageContainer>
 
       <h1>{album.title || 'Unknown Title'}</h1>
 
@@ -32,7 +32,7 @@ function SongDetails() {
 
       <p>{album['primary-type'] || 'Unknown Genre'}</p>
 
-    </div>
+    </SongDetailsContainer>
   );
 }
 

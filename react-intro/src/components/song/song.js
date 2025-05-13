@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import './song.css';
+import { SongMainContainer, SongListArea, SongContainer, SongInfoContainer, SongInfoRight, SearchArea } from './songStyles';
 import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
 import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Song() {
-  const { addToFavorites } = useContext(FavoriteSongContext);
+  const { addToFavorites, favoriteSongs } = useContext(FavoriteSongContext);
   const [artistName, setArtistName] = useState(''); 
   const [searchQuery, setSearchQuery] = useState(''); 
   const { albums, loading, error } = useFetchAlbum(searchQuery);
@@ -31,7 +31,7 @@ function Song() {
   return (
     <>
       {/* Search Area*/}
-      <div className="search-area">
+      <SearchArea>
 
         <input
           type="text"
@@ -42,11 +42,11 @@ function Song() {
           onKeyPress={handleKeyPress} 
         />
         
-        <button id="search-button" onClick={handleSearch}>
+        <button id="searchButton" onClick={handleSearch}>
           Search
         </button>
 
-      </div>
+      </SearchArea>
 
       {/* Loading message*/}
       {loading && <p>Loading albums...</p>}
@@ -56,13 +56,15 @@ function Song() {
 
       {/* Album section generator */}
 
-      <div className="song-list-area">
+      <SongListArea>
 
-        {albums.map((album, index) => (
+        {albums.map((album, index) => {
+          const isFavorite = favoriteSongs.some(fav => fav.id === album.id);
 
-          <div className="song-main-container" key={index}>
+          return (
+          <SongMainContainer key={index}>
 
-            <div className="song-container">
+            <SongContainer>
 
               {/* This is the link to the song details page */}
             <a
@@ -83,9 +85,9 @@ function Song() {
                 )}
               </a>
 
-              <div className="song-info-container">
+              <SongInfoContainer>
 
-                <div className="song-info-left">
+                <div className="songInfoLeft">
 
                   <h2>{album.title}</h2>
 
@@ -97,7 +99,7 @@ function Song() {
 
                 </div>
 
-                <div className="song-info-right">
+                <SongInfoRight $isFavorite={isFavorite}>
 
                 <FontAwesomeIcon
                   icon={faPlus}
@@ -113,25 +115,22 @@ function Song() {
                       link: album.coverArt || '#',
                     };
 
-                    // Log the song data to the console
-                    console.log('Adding to favorites:', songData);
-
                     // Add the song to favorites
                     addToFavorites(songData);
                   }}
                   />
 
-                </div>
+                </SongInfoRight>
 
-              </div>
+              </SongInfoContainer>
 
-            </div>
+            </SongContainer>
 
-          </div>
-
-        ))}
+          </SongMainContainer>
+          );
+        })}
         
-      </div>
+      </SongListArea>
 
     </>
   );

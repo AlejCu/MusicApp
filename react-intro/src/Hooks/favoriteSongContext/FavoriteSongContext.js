@@ -51,7 +51,6 @@ export const FavoriteSongsContext = ({ children }) => {
         (favSong) => favSong.id !== song.id
       );
 
-      console.log(`Removed ${song.title} by ${song.artist} from favorites!`);
       return updatedFavorites;
 
     });

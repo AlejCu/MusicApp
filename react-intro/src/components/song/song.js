@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addSong } from '../../redux/libraryActions';
 import { SongMainContainer, SongListArea, SongContainer, SongInfoContainer, SongInfoRight, SearchArea } from './songStyles';
-import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
 import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 function Song() {
-  const { addToFavorites, favoriteSongs } = useContext(FavoriteSongContext);
+  const dispatch = useDispatch();
+  const favoriteSongs = useSelector(state => state.library);
   const [artistName, setArtistName] = useState(''); 
   const [searchQuery, setSearchQuery] = useState(''); 
   const { albums, loading, error } = useFetchAlbum(searchQuery);
@@ -116,7 +118,7 @@ function Song() {
                     };
 
                     // Add the song to favorites
-                    addToFavorites(songData);
+                    dispatch(addSong(songData));
                   }}
                   />
 

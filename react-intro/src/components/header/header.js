@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { HeaderStyles, SideMenu,  } from './headerStyles';
-import { FavoriteSongContext } from '../../Hooks/favoriteSongContext/FavoriteSongContext';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // Import for FontAwesome icons
@@ -9,7 +9,8 @@ import { faBars, faCirclePlay, faPlay, faTrashCan } from '@fortawesome/free-soli
 
 function Header() {
   const [isMenuVisible, setMenuVisible] = useState(false);
-  const { favoriteSongs, removeFromFavorites } = useContext(FavoriteSongContext);
+  const favoriteSongs = useSelector (state => state.library);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
@@ -75,7 +76,10 @@ function Header() {
 
               </a>
 
-              <FontAwesomeIcon icon={faTrashCan} onClick={() => removeFromFavorites(song)} />
+              <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch ({
+                type: 'REMOVE_SONG',
+                payload: song.id
+              })} />
 
             </div>
 

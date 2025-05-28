@@ -1,44 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+//Components import
 import {Header} from './components/header/header';
 import {Song} from './components/song/song';
 import {SongDetails} from './components/songDetails/songDetails';
+
+//Dependencies import
+import { Provider } from 'react-redux';
+import { store } from './redux/store/store';
 import { GlobalStyle, SongArea } from './indexStyles';
 
-import { FavoriteSongsContext } from './Hooks/favoriteSongContext/FavoriteSongContext';
 import { BrowserRouter, Route, Routes } from "react-router";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
 
-    <FavoriteSongsContext>
+    <Provider store={store}>  
 
-    <BrowserRouter>
+      <BrowserRouter>
 
-      <GlobalStyle />
+        <GlobalStyle />
 
-      <Header/>
+        <Header/>
 
-      <main>
+        <main>
 
-      <SongArea>
+        <SongArea>
 
-            <Routes>
+              <Routes>
 
-              <Route path="/songSearch" element={<Song/>} />
-              <Route path="/songDetails" element={<SongDetails/>} />
-              <Route path="/" element={<Song/>} />
+                <Route path="/songSearch" element={<Song/>} />
+                <Route path="/songDetails" element={<SongDetails/>} />
+                <Route path="/" element={<Song/>} />
 
-            </Routes>
+              </Routes>
 
-        </SongArea>
+          </SongArea>
 
-      </main>
+        </main>
 
-      </BrowserRouter>
+        </BrowserRouter>
 
-    </FavoriteSongsContext>
+    </Provider>
 
   </React.StrictMode>
 );

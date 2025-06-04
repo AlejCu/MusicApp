@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addSong } from '../../redux/libraryActions';
-import { SongMainContainer, SongListArea, SongContainer, SongInfoContainer, SongInfoRight, SearchArea } from './songStyles';
-import useFetchAlbum from '../../Hooks/FetchAlbum/FetchAlbum';
+import { addSong } from '../../redux/slicers/librarySlice';
+import { fetchAlbums } from '../../redux/slicers/searchSlice';
+import { SongMainContainer, SongListArea, SongContainer, SongInfoContainer, SongInfoRight, SearchArea, ErrorMessage } from './songStyles';
 import { useNavigate } from 'react-router-dom';
 
 // FontAwesome icons imports
@@ -12,21 +12,20 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 function Song() {
   const dispatch = useDispatch();
   const favoriteSongs = useSelector(state => state.library);
-  const [artistName, setArtistName] = useState(''); 
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const { albums, loading, error } = useFetchAlbum(searchQuery);
+  const { results: albums, loading, error } = useSelector(state => state.search);
+  const [artistName, setArtistName] = useState('');
   const navigate = useNavigate();
 
   
   //This const is used for the search button
   const handleSearch = () => {
-    setSearchQuery(artistName); 
+    dispatch(fetchAlbums(artistName));
   };
 
   //This const is used for the enter key press
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      setSearchQuery(artistName);
+      dispatch(fetchAlbums(artistName));
     }
   };
 
@@ -50,6 +49,8 @@ function Song() {
 
       </SearchArea>
 
+      <ErrorMessage>
+
       {/* Loading message*/}
       {loading && <p>Loading albums...</p>}
 
@@ -57,6 +58,8 @@ function Song() {
       {error && <p className="error-message">{error}</p>}
 
       {/* Album section generator */}
+
+      </ErrorMessage>
 
       <SongListArea>
 
@@ -93,7 +96,7 @@ function Song() {
 
                   <h2>{album.title}</h2>
 
-                  <h3>{artistName}</h3>
+                  <h3>{album['artist-credit']?.[0]?.name || 'Unknown Artist'}</h3>
 
                   <p><strong>Release Date:</strong> {album['first-release-date']}</p>
 

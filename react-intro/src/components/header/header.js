@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { HeaderStyles, SideMenu,  } from './headerStyles';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { removeSong } from '../../redux/slicers/librarySlice';
 
 // Import for FontAwesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -76,10 +77,7 @@ function Header() {
 
               </a>
 
-              <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch ({
-                type: 'REMOVE_SONG',
-                payload: song.id
-              })} />
+              <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(removeSong(song.id))} />
 
             </div>
 

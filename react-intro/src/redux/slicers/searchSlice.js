@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Thunk asíncrono para buscar álbumes por nombre de artista
+// Asyn Thunk to fetch albums by artist name
 export const fetchAlbums = createAsyncThunk(
   'search/fetchAlbums',
   async (artistName, thunkAPI) => {
     try {
-      // 1. Buscar el artista por nombre
+      // 1. Search the artist by name
       const artistResponse = await fetch(
         `https://musicbrainz.org/ws/2/artist/?query=${encodeURIComponent(artistName)}&fmt=json`
       );
@@ -20,7 +20,7 @@ export const fetchAlbums = createAsyncThunk(
 
       const artistId = artistData.artists[0].id;
 
-      // 2. Buscar los álbumes del artista
+      // 2. Search for artist albums
       const albumResponse = await fetch(
         `https://musicbrainz.org/ws/2/release-group?artist=${artistId}&type=album&fmt=json`
       );
@@ -29,7 +29,7 @@ export const fetchAlbums = createAsyncThunk(
       }
       const albumData = await albumResponse.json();
 
-      // 3. Obtener las portadas de los álbumes
+      // 3. Obtains album covers
       if (albumData['release-groups']) {
         const albumsWithCovers = await Promise.all(
           albumData['release-groups'].map(async (album) => {

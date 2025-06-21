@@ -109,6 +109,7 @@ function Song() {
                 <FontAwesomeIcon
                   icon={faPlus}
                   id="song-add-button"
+                  data-testid="add-song-button"
                   onClick={() => {
                     const songData = {
                       id: album.id,

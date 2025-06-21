@@ -11,7 +11,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
 import { GlobalStyle, SongArea } from './indexStyles';
 
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

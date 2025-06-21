@@ -23,7 +23,7 @@ function Header() {
 
         <div id="header-menu-left">
 
-          <FontAwesomeIcon icon={faBars} id="header-menu-icon" onClick={toggleMenu} />
+          <FontAwesomeIcon icon={faBars} id="header-menu-icon" data-testid="header-menu-icon" onClick={toggleMenu} />
 
         </div>
 
@@ -47,43 +47,46 @@ function Header() {
 
         <h1>Favorites</h1>
 
-        {favoriteSongs.map((song, index) => (
+        {favoriteSongs.length === 0 ? (
+          <p>There are no songs in your library</p>
+        ) : (
 
-          <div className="side-menu-container" key={index}>
+          favoriteSongs.map((song, index) => (
 
-            <img
-              src={song.img}
-              alt={`Cover of ${song.title}`}
-              className="album-cover"
-            />
+            <div className="side-menu-container" key={index}>
 
-            <h2>{song.title || 'Unknown Title'}</h2>
+              <img
+                src={song.img}
+                alt={`Cover of ${song.title}`}
+                className="album-cover"
+              />
 
-            <h3>{song.artist || 'Unknown Artist'}</h3>
+              <h2>{song.title || 'Unknown Title'}</h2>
 
-            <div className="side-menu-info">
+              <h3>{song.artist || 'Unknown Artist'}</h3>
 
-              <p>{song.year || 'Unknown Year'}</p>
+              <div className="side-menu-info">
 
-              <p>{song.genre || 'Unknown Genre'}</p>
+                <p>{song.year || 'Unknown Year'}</p>
+
+                <p>{song.genre || 'Unknown Genre'}</p>
+
+              </div>
+
+              <div className="side-menu-buttons">
+
+                <a>
+                  <FontAwesomeIcon icon={faPlay} />
+                </a>
+
+                <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(removeSong(song.id))} />
+
+              </div>
 
             </div>
-
-            <div className="side-menu-buttons">
-
-              <a>
-
-                <FontAwesomeIcon icon={faPlay} />
-
-              </a>
-
-              <FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(removeSong(song.id))} />
-
-            </div>
-
-          </div>
-
-        ))}
+            
+          ))
+        )}
 
       </SideMenu>
     </>
